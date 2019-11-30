@@ -1,11 +1,20 @@
 import * as React from 'react'
 import { StyleSheet, Text, View,Button,  ActivityIndicator, } from 'react-native'
-// import {Grid,Block,Section} from 'react-native-responsive-layout'
+import {Grid,Block,Section} from 'react-native-responsive-layout'
 import useSWR, { SWRConfig } from "swr";
 
 async function fetchTodos(...args) {
   const res = await fetch(...args);
   return await res.json();
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
 
 
@@ -36,45 +45,67 @@ export default function App(props) {
         {/* <Text accessibilityRole="header" aria-level="2" style={styles.text}>
           Loading...
         </Text> */}
-        <ActivityIndicator size="large" color="#0000ff" animating="true" />
+        <ActivityIndicator size="large" color="#0000ff" animating={true} />
       </View>
    </View>
   );
 
   return (
     <View style={styles.container}>
-      <View style={{
-        flexDirection:"row",
-
-
-      }}>
-      <Text style={styles.link} accessibilityRole="link" href={`/alternate`}>
-        Alternative
-      </Text>
-
-       <Text style={styles.link} accessibilityRole="link" href={`/404`}>
-        404
-      </Text>
-
-      </View>
+    
+        <Grid style={{}}>
+          <Section style={{width:"100%"}}> 
+            <Block xsSize="1/1" smSize="1/1" lgSize="1/2"  style={{alignItems: 'center',}}>
+              <Text style={[styles.link,{textAlign:"right"}]} accessibilityRole="link" href={`/alternate`}>
+                Alternative
+              </Text>
+            </Block>
+            <Block xsSize="1/1" smSize="1/1" lgSize="1/2" style={{alignItems: 'center',}}>
+            <Text style={styles.link} accessibilityRole="link" href={`/404`}>
+              404
+            </Text>
+            </Block>
+          </Section>
+      </Grid>
+    
 
       <View style={styles.textContainer}>
+        <SWRConfig>
         <Text accessibilityRole="header" style={styles.text}>
             Loaded Data
         </Text>
-        {data.map((el,index)=>{
-          return(
-            <Text accessibilityRole="header" aria-level="3" style={styles.text}>
-              {el.title}
-           </Text>
-          )
-        })
-      }
+            {data.map((el,index)=>{
+              return(
+                <Text accessibilityRole="header" aria-level="3" style={styles.text} key={index}>
+                  {el.title}
+              </Text>
+              )
+            })
+          }
 
+        </SWRConfig>
 
       </View>
 
-   
+      <Grid style={{}}>
+        <Section style={{width:"100%"}}> 
+          <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  style={{backgroundColor: getRandomColor()}}>
+            <Text >1/2</Text>
+          </Block>
+          <Block xsSize="1/1" smSize="1/1"lgSize="1/2" style={{backgroundColor: getRandomColor()}}>
+            <Text>1/2</Text>
+          </Block>
+
+          <Block xsSize="1/1" smSize="1/1" lgSize="1/2" style={{backgroundColor: getRandomColor()}}> 
+            <Text>1/2</Text>
+          </Block>
+
+          <Block  xsSize="1/1" smSize="1/1" lgSize="1/2" style={{backgroundColor: getRandomColor()}}> 
+            <Text>1/2</Text>
+          </Block>
+
+        </Section>
+     </Grid>
       
       <View style={styles.textContainer}>
         <Text accessibilityRole="header" aria-level="2" style={styles.text}>
@@ -95,7 +126,8 @@ export default function App(props) {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    // alignItems: 'center',
+    flex:1,
     flexGrow: 1,
     justifyContent: 'center',
   },
@@ -108,7 +140,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   text: {
-    alignItems: 'center',
+    // alignItems: 'center',
     fontSize: 24,
     marginBottom: 24,
   },

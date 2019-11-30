@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "next": "latest",
+    "next-transpile-modules": "^2.3.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-native-responsive-layout": "^1.2.0",
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-transform-arrow-functions": "^7.7.4",
-    "babel-plugin-react-native-web": "^0.11.7"
+    "babel-plugin-react-native-web": "^0.11.7",
+    "babel-plugin-transform-class-properties": "^6.24.1"
   }
 }
