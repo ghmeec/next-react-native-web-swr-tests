@@ -89,18 +89,18 @@ export default function App(props) {
 
       <Grid style={{}}>
         <Section style={{width:"100%"}}> 
-          <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  style={{backgroundColor: getRandomColor()}}>
+          <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  style={{backgroundColor: getRandomColor(),height:200}}>
             <Text >1/2</Text>
           </Block>
-          <Block xsSize="1/1" smSize="1/1"lgSize="1/2" style={{backgroundColor: getRandomColor()}}>
+          <Block xsSize="1/1" smSize="1/1"lgSize="1/2" style={{backgroundColor: getRandomColor(),height:200}}>
             <Text>1/2</Text>
           </Block>
 
-          <Block xsSize="1/1" smSize="1/1" lgSize="1/2" style={{backgroundColor: getRandomColor()}}> 
+          <Block xsSize="1/1" smSize="1/1" lgSize="1/2" style={{backgroundColor: getRandomColor(),height:200}}> 
             <Text>1/2</Text>
           </Block>
 
-          <Block  xsSize="1/1" smSize="1/1" lgSize="1/2" style={{backgroundColor: getRandomColor()}}> 
+          <Block  xsSize="1/1" smSize="1/1" lgSize="1/2" style={{backgroundColor: getRandomColor(),height:200}}> 
             <Text>1/2</Text>
           </Block>
 
