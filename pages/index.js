@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StyleSheet, Text, View,Button,  ActivityIndicator, } from 'react-native'
+import { StyleSheet, Text, View,Button,  ActivityIndicator,ScrollView } from 'react-native'
 import {Grid,Block,Section} from 'react-native-responsive-layout'
 import useSWR, { SWRConfig } from "swr";
 
@@ -40,7 +40,7 @@ export default function App(props) {
 
   );
   if (!data) return (
-    <View style={styles.container}>
+    <View style={[styles.container,styles.centered]}>
       <View style={styles.textContainer}>
         {/* <Text accessibilityRole="header" aria-level="2" style={styles.text}>
           Loading...
@@ -51,7 +51,7 @@ export default function App(props) {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
     
         <Grid style={{}}>
           <Section style={{width:"100%"}}> 
@@ -108,19 +108,11 @@ export default function App(props) {
      </Grid>
       
       <View style={styles.textContainer}>
-        <Text accessibilityRole="header" aria-level="2" style={styles.text}>
-          {number}
-        </Text>
-        <Button
-          title="Add number"
-          onPress={()=>{
-            setNumber(number+1)
-          }}
-        >Add umber</Button>
+ 
       </View>
+          
 
-
-    </View>
+    </ScrollView>
   )
 }
 
@@ -129,6 +121,11 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     flex:1,
     flexGrow: 1,
+    // justifyContent: 'center',
+    paddingVertical:15
+  },
+  centered:{
+    alignItems: 'center',
     justifyContent: 'center',
   },
   link: {
