@@ -43,9 +43,20 @@ export default function App(props) {
 
   return (
     <View style={styles.container}>
-      <Text accessibilityRole="header" style={styles.text}>
-        React Native for Web & Next.js
+      <View style={{
+        flexDirection:"row",
+
+
+      }}>
+      <Text style={styles.link} accessibilityRole="link" href={`/alternate`}>
+        Alternative
       </Text>
+
+       <Text style={styles.link} accessibilityRole="link" href={`/404`}>
+        404
+      </Text>
+
+      </View>
 
       <View style={styles.textContainer}>
         <Text accessibilityRole="header" style={styles.text}>
@@ -63,9 +74,7 @@ export default function App(props) {
 
       </View>
 
-      <Text style={styles.link} accessibilityRole="link" href={`/alternate`}>
-        A universal link
-      </Text>
+   
       
       <View style={styles.textContainer}>
         <Text accessibilityRole="header" aria-level="2" style={styles.text}>
@@ -92,6 +101,7 @@ const styles = StyleSheet.create({
   },
   link: {
     color: 'blue',
+    marginHorizontal:40
   },
   textContainer: {
     alignItems: 'center',
