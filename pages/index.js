@@ -77,8 +77,9 @@ const FooterMenu = ({ menuItems, styles }) => {
   );
 };
 
-export default function App(props) {
-  const [number,setNumber]=React.useState(0)
+
+const HomeContent=()=>{
+
   const { data, error } = useSWR(
     //  using mongodb stictch webbook
     //  for real time database update in mongodb atlas
@@ -88,20 +89,6 @@ export default function App(props) {
     fetchTodos
   );
   
-  const stylesInner = {
-    white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    topBarHeight: 45,
-    footerMenuHeight: 50
-  };
-
-  const menuItems = [
-    { icon: `😀`, text: "Item 1" },
-    { icon: `😉`, text: "Item 2" },
-    { icon: `😎`, text: "Item 3" },
-    { icon: `🤔`, text: "Item 4" },
-    { icon: `😛`, text: "Item 5" }
-  ];
 
 
   if (error) return (
@@ -126,26 +113,8 @@ export default function App(props) {
   );
 
   return (
-    <View style={{flex:1}}>
-    <TopBar styles={stylesInner} />
-    <ScrollView style={[styles.container,{zIndex:-1}]}>
+    <ScrollView style={[styles.container,{zIndex:-1,marginTop:40}]}>
         
-        <Grid style={{}}>
-          <Section style={{width:"100%"}}> 
-            <Block xsSize="1/1" smSize="1/1" lgSize="1/2"  style={{alignItems: 'center',}}>
-              <Text style={[styles.link,{textAlign:"right"}]} accessibilityRole="link" href={`/alternate`}>
-                Alternative
-              </Text>
-            </Block>
-            <Block xsSize="1/1" smSize="1/1" lgSize="1/2" style={{alignItems: 'center',}}>
-            <Text style={styles.link} accessibilityRole="link" href={`/404`}>
-              404
-            </Text>
-            </Block>
-          </Section>
-      </Grid>
-    
-
       <View style={styles.container}>
         <SWRConfig>
         <Text accessibilityRole="header" style={styles.text}>
@@ -190,10 +159,35 @@ export default function App(props) {
         </Section>
      </Grid>
       
-        
-    
     </ScrollView>
-     <FooterMenu menuItems={menuItems} styles={stylesInner} />
+  )
+
+
+}
+export default function App(props) {
+
+  const stylesInner = {
+    white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    topBarHeight: 45,
+    footerMenuHeight: 50
+  };
+
+  const menuItems = [
+    { icon: `😀`, text: "Item 1" },
+    { icon: `😉`, text: "Item 2" },
+    { icon: `😎`, text: "Item 3" },
+    { icon: `🤔`, text: "Item 4" },
+    { icon: `😛`, text: "Item 5" }
+  ];
+
+
+
+  return (
+    <View style={{flex:1}}>
+      <TopBar styles={stylesInner} />
+      <HomeContent></HomeContent>
+      <FooterMenu menuItems={menuItems} styles={stylesInner} />
     </View>
   )
 }
