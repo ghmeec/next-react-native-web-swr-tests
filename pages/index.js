@@ -69,7 +69,7 @@ const FooterMenu = ({ menuItems, styles }) => {
               flex: 1
             }}
           >
-            <span style={{ fontSize: 20 }}>{item.icon}</span>
+            <Text accessibilityRole="link" href={`/alternate`} style={{ fontSize: 20 }}>{item.icon}</Text>
           </div>
         );
       })}
@@ -91,7 +91,7 @@ export default function App(props) {
   const stylesInner = {
     white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    topBarHeight: 40,
+    topBarHeight: 45,
     footerMenuHeight: 50
   };
 
