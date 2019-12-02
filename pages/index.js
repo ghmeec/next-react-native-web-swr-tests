@@ -11,6 +11,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AntIcon from 'react-native-vector-icons/AntDesign'
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 
+const logo="/site_logo.png"
+
+// <img src="/my-image.png" alt="my image" />
 import useSWR, { SWRConfig } from "swr";
 
 async function fetchTodos( ...args ) {
@@ -48,8 +51,23 @@ const TopBar = ({ styles }) => {
 
   return (
     <View style={topBarStyle}>
-      <Text>{`😺️`}</Text>
-      <Text style={{fontSize:18}}>George Honorius Milanzi</Text>
+      {/* <Text>{`😺️`}</Text> */}
+      <TouchableOpacity
+        onPress={()=>{}}
+        >
+        <img 
+        
+        src={logo} 
+        style={{
+          height:30
+        }}
+        alt="my image" />
+      </TouchableOpacity>
+      <Text style={{
+        fontSize:18,
+        color:'#17252A',
+        fontFamily:"Helvetica"
+        }}>George Honorius Milanzi</Text>
       <AntIcon name="setting" size={24} color="#333" />
     </View>
   );
@@ -64,7 +82,7 @@ const FooterMenu = ({ menuItems, styles }) => {
         alignItems: "stretch",
         width: "100%",
         height: styles.footerMenuHeight,
-        backgroundColor: "#333",
+        backgroundColor: "#17252A",
         color: "#fff",
         position: "fixed",
         bottom: 0
@@ -104,6 +122,7 @@ const HomeContent=()=>{
     fetchTodos
   );
   
+  const loremIpsum=`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
 
 
   if (error) return (
@@ -122,7 +141,7 @@ const HomeContent=()=>{
         {/* <Text accessibilityRole="header" aria-level="2" style={styles.text}>
           Loading...
         </Text> */}
-        <ActivityIndicator size="large" color="rgb(29, 161, 242)" animating={true} />
+        <ActivityIndicator size="large" color="#1a73e8" animating={true} />
       </View>
    </View>
   );
@@ -132,16 +151,26 @@ const HomeContent=()=>{
         
       <View style={styles.container}>
         <SWRConfig>
-        <Text  aria-level="3" style={[styles.text,{fontSize:24}]}>
-            Welcome to My Personal website
+        <Text  aria-level="3" style={[
+          styles.text,{
+            fontSize:24,
+            fontFamily: ["Roboto", "Helvetica", "Arial"],
+            color:"#17252A",
+            fontWeight:"bold",
+            textAlign:"center"
+            }]}>
+            Under Construction
         </Text>
         <Grid style={{}}>
           <Section style={{width:"100%"}}> 
             {data.map((el,index)=>{
               return(
-              <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  key={index} style={{backgroundColor: getRandomColor(),height:200,justifyContent:"center"}}>
+              <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  key={index} style={{
+                // backgroundColor: getRandomColor(),
+                height:200,justifyContent:"center"}}>
                 <Text accessibilityRole="header" aria-level="3" style={styles.text} >
-                    {el.title}
+                    {/* {el.title} */}
+                    {loremIpsum}
                 </Text>
               </Block>
               )
@@ -153,26 +182,7 @@ const HomeContent=()=>{
         </SWRConfig>
 
       </View>
-
-      <Grid style={{}}>
-        <Section style={{width:"100%"}}> 
-          <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  style={{backgroundColor: getRandomColor(),height:200}}>
-            <Text >1/2</Text>
-          </Block>
-          <Block xsSize="1/1" smSize="1/1"lgSize="1/2" style={{backgroundColor: getRandomColor(),height:200}}>
-            <Text>1/2</Text>
-          </Block>
-
-          <Block xsSize="1/1" smSize="1/1" lgSize="1/2" style={{backgroundColor: getRandomColor(),height:200}}> 
-            <Text>1/2</Text>
-          </Block>
-
-          <Block  xsSize="1/1" smSize="1/1" lgSize="1/2" style={{backgroundColor: getRandomColor(),height:200}}> 
-            <Text>1/2</Text>
-          </Block>
-
-        </Section>
-     </Grid>
+     
       
     </ScrollView>
   )
@@ -299,8 +309,9 @@ const styles = StyleSheet.create({
   },
   text: {
     // alignItems: 'center',
-    fontSize: 24,
+    fontSize: 15,
     marginBottom: 24,
-    textAlign:"center"
+    // textAlign:"center",
+    paddingHorizontal:15,
   },
 })
