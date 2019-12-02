@@ -267,7 +267,7 @@ export default class App extends React.Component {
     };
 
     const  menuItems = [
-    { icon: <AntIcon name="home" size={24} color="#fff"/>, text: "Home" ,toRoute:"/" },
+    { icon: <AntIcon name="home" size={24} color="#fff"/>, text: "Home" ,to:"/" },
     { icon: <EntypoIcon name="graduation-cap" size={24} color="#fff" />, text: "Skills",to:"/skills" },
     { icon: <EntypoIcon name="archive" size={24} color="#fff" />, text: "Projects",to:"/projects" },
     { icon: <EntypoIcon name="code" size={24} color="#fff" />, text: "Experience", to:"/experience"},
