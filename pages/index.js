@@ -69,19 +69,25 @@ export default function App(props) {
       </Grid>
     
 
-      <View style={styles.textContainer}>
+      <View style={styles.container}>
         <SWRConfig>
         <Text accessibilityRole="header" style={styles.text}>
             Loaded Data
         </Text>
+        <Grid style={{}}>
+          <Section style={{width:"100%"}}> 
             {data.map((el,index)=>{
               return(
-                <Text accessibilityRole="header" aria-level="3" style={styles.text} key={index}>
-                  {el.title}
-              </Text>
+              <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  key={index} style={{backgroundColor: getRandomColor(),height:200,justifyContent:"center"}}>
+                <Text accessibilityRole="header" aria-level="3" style={styles.text} >
+                    {el.title}
+                </Text>
+              </Block>
               )
             })
           }
+          </Section>
+          </Grid>
 
         </SWRConfig>
 
@@ -107,10 +113,7 @@ export default function App(props) {
         </Section>
      </Grid>
       
-      <View style={styles.textContainer}>
- 
-      </View>
-          
+        
 
     </ScrollView>
   )
@@ -122,7 +125,8 @@ const styles = StyleSheet.create({
     flex:1,
     flexGrow: 1,
     // justifyContent: 'center',
-    paddingVertical:15
+    paddingTop:15,
+    marginBottom:0
   },
   centered:{
     alignItems: 'center',
@@ -140,5 +144,6 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     fontSize: 24,
     marginBottom: 24,
+    textAlign:"center"
   },
 })
