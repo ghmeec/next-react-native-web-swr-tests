@@ -100,7 +100,7 @@ const FooterMenu = ({ menuItems, styles }) => {
             }}
           >
             <TouchableOpacity onPress={()=>{}}>
-              <Text accessibilityRole="link" href={`/alternate`} style={{ fontSize: 20,color:"white",textAlign:"center" }}>{item.icon}</Text>
+              <Text accessibilityRole="link" href={`${item.to}`} style={{ fontSize: 20,color:"white",textAlign:"center" }}>{item.icon}</Text>
               <Text style={{color:"white"}}>{styles.showFooterMenuText && item.text}</Text>
             </TouchableOpacity>
           </div>
@@ -267,11 +267,11 @@ export default class App extends React.Component {
     };
 
     const  menuItems = [
-    { icon: <AntIcon name="home" size={24} color="#fff" />, text: "Home" },
-    { icon: <EntypoIcon name="graduation-cap" size={24} color="#fff" />, text: "Skills" },
-    { icon: <EntypoIcon name="archive" size={24} color="#fff" />, text: "Projects" },
-    { icon: <EntypoIcon name="code" size={24} color="#fff" />, text: "Experience" },
-    { icon: <AntIcon name="contacts" size={24} color="#fff" />, text: "Contacts" }
+    { icon: <AntIcon name="home" size={24} color="#fff"/>, text: "Home" ,toRoute:"/" },
+    { icon: <EntypoIcon name="graduation-cap" size={24} color="#fff" />, text: "Skills",to:"/skills" },
+    { icon: <EntypoIcon name="archive" size={24} color="#fff" />, text: "Projects",to:"/projects" },
+    { icon: <EntypoIcon name="code" size={24} color="#fff" />, text: "Experience", to:"/experience"},
+    { icon: <AntIcon name="contacts" size={24} color="#fff" />, text: "Contacts", to:"/contacts" }
   ];
 
 
