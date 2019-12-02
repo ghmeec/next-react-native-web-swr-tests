@@ -141,7 +141,7 @@ const HomeContent=()=>{
         {/* <Text accessibilityRole="header" aria-level="2" style={styles.text}>
           Loading...
         </Text> */}
-        <ActivityIndicator size="large" color="#1a73e8" animating={true} />
+        <ActivityIndicator size="large" color="#17252A" animating={true} />
       </View>
    </View>
   );
