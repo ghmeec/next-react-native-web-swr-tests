@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { StyleSheet, Text, View,Button,  ActivityIndicator,ScrollView } from 'react-native'
+import { StyleSheet, Text, View,Button,  ActivityIndicator,ScrollView,TouchableOpacity } from 'react-native'
 import {Grid,Block,Section} from 'react-native-responsive-layout'
 import useSWR, { SWRConfig } from "swr";
 
-async function fetchTodos(...args) {
-  const res = await fetch(...args);
+async function fetchTodos( ...args ) {
+  const res = await fetch( ...args );
   return await res.json();
 }
 
@@ -23,6 +23,7 @@ const TopBar = ({ styles }) => {
     position: "fixed",
     top: 0,
     display: "flex",
+    flexDirection:"row",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
@@ -31,15 +32,16 @@ const TopBar = ({ styles }) => {
     borderBottom: `1px solid ${styles.black(0.1)}`,
     fontWeight: "bold",
     padding: "0px 20px",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
+    paddingHorizontal:20,
   };
 
   return (
-    <div style={topBarStyle}>
-      <span>{`😺️`}</span>
-      George Honorius Milanzi
-      <span>{`⚙️`}</span>
-    </div>
+    <View style={topBarStyle}>
+      <Text>{`😺️`}</Text>
+      <Text style={{fontSize:18}}>George Honorius Milanzi</Text>
+      <Text>{`⚙️`}</Text>
+    </View>
   );
 };
 
@@ -69,7 +71,9 @@ const FooterMenu = ({ menuItems, styles }) => {
               flex: 1
             }}
           >
-            <Text accessibilityRole="link" href={`/alternate`} style={{ fontSize: 20 }}>{item.icon}</Text>
+            <TouchableOpacity onPress={()=>{}}>
+              <Text accessibilityRole="link" href={`/alternate`} style={{ fontSize: 20,color:"white" }}>{item.icon}</Text>
+            </TouchableOpacity>
           </div>
         );
       })}
@@ -92,9 +96,9 @@ const HomeContent=()=>{
 
 
   if (error) return (
-    <View style={styles.container}>
+    <View style={[styles.container,{justifyContent:"center"},{zIndex:0,marginTop:40}]}>
       <View style={styles.textContainer}>
-        <Text accessibilityRole="header" aria-level="2" style={styles.text}>
+        <Text  aria-level="2" style={styles.text}>
           Lost internet connection
         </Text>
       </View>
@@ -102,22 +106,22 @@ const HomeContent=()=>{
 
   );
   if (!data) return (
-    <View style={[styles.container,styles.centered]}>
+    <View style={[styles.container,styles.centered,{zIndex:0,marginTop:40}]}>
       <View style={styles.textContainer}>
         {/* <Text accessibilityRole="header" aria-level="2" style={styles.text}>
           Loading...
         </Text> */}
-        <ActivityIndicator size="large" color="#0000ff" animating={true} />
+        <ActivityIndicator size="large" color="rgb(29, 161, 242)" animating={true} />
       </View>
    </View>
   );
 
   return (
-    <ScrollView style={[styles.container,{zIndex:-1,marginTop:40}]}>
+    <ScrollView style={[styles.container,{zIndex:0,marginTop:40}]}>
         
       <View style={styles.container}>
         <SWRConfig>
-        <Text accessibilityRole="header" style={styles.text}>
+        <Text  aria-level="3" style={[styles.text,{fontSize:24}]}>
             Welcome to My Personal website
         </Text>
         <Grid style={{}}>
@@ -164,32 +168,34 @@ const HomeContent=()=>{
 
 
 }
-export default function App(props) {
+export default class App extends React.Component {
 
-  const stylesInner = {
+  stylesInner = {
     white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     topBarHeight: 45,
     footerMenuHeight: 50
   };
 
-  const menuItems = [
-    { icon: `😀`, text: "Item 1" },
-    { icon: `😉`, text: "Item 2" },
-    { icon: `😎`, text: "Item 3" },
-    { icon: `🤔`, text: "Item 4" },
-    { icon: `😛`, text: "Item 5" }
+  menuItems = [
+    { icon: `😀`, text: "Home" },
+    { icon: `😉`, text: "Skills" },
+    { icon: `😎`, text: "Projects" },
+    { icon: `🤔`, text: "Experience" },
+    { icon: `😛`, text: "Contacts" }
   ];
 
 
+  render(){
+    return (
+      <View style={{flex:1}}>
+        <TopBar styles={this.stylesInner} />
+        <HomeContent></HomeContent>
+        <FooterMenu menuItems={this.menuItems} styles={this.stylesInner} />
+      </View>
+    )
+  }
 
-  return (
-    <View style={{flex:1}}>
-      <TopBar styles={stylesInner} />
-      <HomeContent></HomeContent>
-      <FooterMenu menuItems={menuItems} styles={stylesInner} />
-    </View>
-  )
 }
 
 const styles = StyleSheet.create({
