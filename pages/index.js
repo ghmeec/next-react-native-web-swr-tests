@@ -18,6 +18,65 @@ function getRandomColor() {
 }
 
 
+const TopBar = ({ styles }) => {
+  const topBarStyle = {
+    position: "fixed",
+    top: 0,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    height: styles.topBarHeight,
+    backgroundColor: styles.white(),
+    borderBottom: `1px solid ${styles.black(0.1)}`,
+    fontWeight: "bold",
+    padding: "0px 20px",
+    boxSizing: "border-box"
+  };
+
+  return (
+    <div style={topBarStyle}>
+      <span>{`😺️`}</span>
+      George Honorius Milanzi
+      <span>{`⚙️`}</span>
+    </div>
+  );
+};
+
+
+const FooterMenu = ({ menuItems, styles }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "stretch",
+        width: "100%",
+        height: styles.footerMenuHeight,
+        backgroundColor: "#333",
+        color: "#fff",
+        position: "fixed",
+        bottom: 0
+      }}
+    >
+      {menuItems.map((item, i) => {
+        return (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1
+            }}
+          >
+            <span style={{ fontSize: 20 }}>{item.icon}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 export default function App(props) {
   const [number,setNumber]=React.useState(0)
   const { data, error } = useSWR(
@@ -28,6 +87,22 @@ export default function App(props) {
     "https://webhooks.mongodb-stitch.com/api/client/v2.0/app/shutta-jrspv/service/fetchUsers/incoming_webhook/todoHook",
     fetchTodos
   );
+  
+  const stylesInner = {
+    white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    topBarHeight: 40,
+    footerMenuHeight: 50
+  };
+
+  const menuItems = [
+    { icon: `😀`, text: "Item 1" },
+    { icon: `😉`, text: "Item 2" },
+    { icon: `😎`, text: "Item 3" },
+    { icon: `🤔`, text: "Item 4" },
+    { icon: `😛`, text: "Item 5" }
+  ];
+
 
   if (error) return (
     <View style={styles.container}>
@@ -51,8 +126,10 @@ export default function App(props) {
   );
 
   return (
-    <ScrollView style={styles.container}>
-    
+    <View style={{flex:1}}>
+    <TopBar styles={stylesInner} />
+    <ScrollView style={[styles.container,{zIndex:-1}]}>
+        
         <Grid style={{}}>
           <Section style={{width:"100%"}}> 
             <Block xsSize="1/1" smSize="1/1" lgSize="1/2"  style={{alignItems: 'center',}}>
@@ -72,7 +149,7 @@ export default function App(props) {
       <View style={styles.container}>
         <SWRConfig>
         <Text accessibilityRole="header" style={styles.text}>
-            Loaded Data
+            Welcome to My Personal website
         </Text>
         <Grid style={{}}>
           <Section style={{width:"100%"}}> 
@@ -114,8 +191,10 @@ export default function App(props) {
      </Grid>
       
         
-
+    
     </ScrollView>
+     <FooterMenu menuItems={menuItems} styles={stylesInner} />
+    </View>
   )
 }
 
