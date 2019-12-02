@@ -1,6 +1,16 @@
 import * as React from 'react'
 import { StyleSheet, Text, View,Button,  ActivityIndicator,ScrollView,TouchableOpacity } from 'react-native'
 import {Grid,Block,Section} from 'react-native-responsive-layout'
+// import { Button as ElementButton } from 'react-native-elements'
+
+import iconFont from 'react-native-vector-icons/Fonts/FontAwesome.ttf';
+import iconFont2 from 'react-native-vector-icons/Fonts/AntDesign.ttf'
+import iconFont3 from 'react-native-vector-icons/Fonts/Entypo.ttf'
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import AntIcon from 'react-native-vector-icons/AntDesign'
+import EntypoIcon from 'react-native-vector-icons/Entypo'
+
 import useSWR, { SWRConfig } from "swr";
 
 async function fetchTodos( ...args ) {
@@ -40,7 +50,7 @@ const TopBar = ({ styles }) => {
     <View style={topBarStyle}>
       <Text>{`😺️`}</Text>
       <Text style={{fontSize:18}}>George Honorius Milanzi</Text>
-      <Text>{`⚙️`}</Text>
+      <AntIcon name="setting" size={24} color="#333" />
     </View>
   );
 };
@@ -72,7 +82,8 @@ const FooterMenu = ({ menuItems, styles }) => {
             }}
           >
             <TouchableOpacity onPress={()=>{}}>
-              <Text accessibilityRole="link" href={`/alternate`} style={{ fontSize: 20,color:"white" }}>{item.icon}</Text>
+              <Text accessibilityRole="link" href={`/alternate`} style={{ fontSize: 20,color:"white",textAlign:"center" }}>{item.icon}</Text>
+              <Text style={{color:"white"}}>{styles.showFooterMenuText && item.text}</Text>
             </TouchableOpacity>
           </div>
         );
@@ -170,28 +181,95 @@ const HomeContent=()=>{
 }
 export default class App extends React.Component {
 
-  stylesInner = {
-    white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    topBarHeight: 45,
-    footerMenuHeight: 50
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      windowWidth: 0,
+      windowHeight: 0
+    };
+    this.updateDimensions = this.updateDimensions.bind(this);
+  }
 
-  menuItems = [
-    { icon: `😀`, text: "Home" },
-    { icon: `😉`, text: "Skills" },
-    { icon: `😎`, text: "Projects" },
-    { icon: `🤔`, text: "Experience" },
-    { icon: `😛`, text: "Contacts" }
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions);
+
+    // Generate required css
+  
+    const iconFontStyles = `@font-face {
+      src: url(${iconFont});
+      font-family: FontAwesome;
+    }
+    @font-face {
+      src: url(${iconFont2});
+      font-family: AntDesign;
+    }
+
+    @font-face {
+      src: url(${iconFont3});
+      font-family:  Entypo;
+    }
+
+   
+    
+    `;
+
+    // Create stylesheet
+    const style = document.createElement('style');
+    style.type = 'text/css';
+
+
+    if (style.styleSheet) {
+      style.styleSheet.cssText = iconFontStyles;
+    } else {
+      style.appendChild(document.createTextNode(iconFontStyles));
+    }
+
+    // Inject stylesheet
+    document.head.appendChild(style);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
+  updateDimensions() {
+    let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+    this.setState({ windowWidth, windowHeight });
+  }
+
+ 
+
+ 
+
+  render(){
+    const { windowWidth } = this.state;
+
+    const stylesInner = {
+      white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+      topBarHeight: 40,
+      footerMenuHeight: 50,
+      // show footer menu text when window is wide enough
+      showFooterMenuText: windowWidth > 500
+    };
+
+    const  menuItems = [
+    { icon: <AntIcon name="home" size={24} color="#fff" />, text: "Home" },
+    { icon: <EntypoIcon name="graduation-cap" size={24} color="#fff" />, text: "Skills" },
+    { icon: <EntypoIcon name="archive" size={24} color="#fff" />, text: "Projects" },
+    { icon: <EntypoIcon name="code" size={24} color="#fff" />, text: "Experience" },
+    { icon: <AntIcon name="contacts" size={24} color="#fff" />, text: "Contacts" }
   ];
 
 
-  render(){
     return (
       <View style={{flex:1}}>
-        <TopBar styles={this.stylesInner} />
+        <TopBar styles={stylesInner} />
         <HomeContent></HomeContent>
-        <FooterMenu menuItems={this.menuItems} styles={this.stylesInner} />
+        <FooterMenu menuItems={menuItems} styles={stylesInner} />
       </View>
     )
   }

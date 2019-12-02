@@ -10,7 +10,9 @@
     "next-transpile-modules": "^2.3.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-native-elements": "^1.2.7",
     "react-native-responsive-layout": "^1.2.0",
+    "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.6",
     "swr": "^0.1.12"
   },
