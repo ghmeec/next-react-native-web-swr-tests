@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StyleSheet, Text, View,Button,  ActivityIndicator,ScrollView,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,Button,  ActivityIndicator,ScrollView,TouchableOpacity,Image } from 'react-native'
 import {Grid,Block,Section} from 'react-native-responsive-layout'
 // import { Button as ElementButton } from 'react-native-elements'
 
@@ -31,7 +31,7 @@ function getRandomColor() {
 }
 
 
-const TopBar = ({ styles }) => {
+const TopBar = ({ stylesInner }) => {
   const topBarStyle = {
     position: "fixed",
     top: 0,
@@ -40,9 +40,9 @@ const TopBar = ({ styles }) => {
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    height: styles.topBarHeight,
-    backgroundColor: styles.white(),
-    borderBottom: `1px solid ${styles.black(0.1)}`,
+    height: stylesInner.topBarHeight,
+    backgroundColor: stylesInner.white(),
+    borderBottom: `1px solid ${stylesInner.black(0.1)}`,
     fontWeight: "bold",
     padding: "0px 20px",
     boxSizing: "border-box",
@@ -50,38 +50,63 @@ const TopBar = ({ styles }) => {
   };
 
   return (
-    <View style={topBarStyle}>
-      {/* <Text>{`😺️`}</Text> */}
+
+    <Grid style={{}}>
+    <Block xsSize="1/4" smSize="1/4"lgSize="1/4"  
+      style={[{paddingVertical:8},styles.contentPadding]
+      }>
       <TouchableOpacity
-        onPress={()=>{}}
-        >
-        <img 
+          onPress={()=>{}}
+          >
+          <Image
+          
+          source={logo}
+          src={logo} 
+          style={[{
+            height:32,
+            width:32
+          }]}
+          alt="my image" />
+        </TouchableOpacity>
+    </Block>
+
+    <Block xsSize="1/4" smSize="1/4"lgSize="1/4"  style={{}}>
+    
+    </Block>
+
+    </Grid>
+    // <View style={topBarStyle}>
+    //   {/* <Text>{`😺️`}</Text> */}
+    //   <TouchableOpacity
+    //     onPress={()=>{}}
+    //     >
+    //     <img 
         
-        src={logo} 
-        style={{
-          height:30
-        }}
-        alt="my image" />
-      </TouchableOpacity>
-      <Text style={{
-        fontSize:18,
-        color:'#17252A',
-        fontFamily:"Helvetica"
-        }}>George Honorius Milanzi</Text>
-      <AntIcon name="setting" size={24} color="#333" />
-    </View>
+    //     src={logo} 
+    //     style={{
+    //       height:30
+    //     }}
+    //     alt="my image" />
+    //   </TouchableOpacity>
+    //   <Text style={{
+    //     fontSize:18,
+    //     color:'#17252A',
+    //     fontFamily:"Helvetica"
+    //     }}>George Honorius Milanzi</Text>
+    //   <AntIcon name="setting" size={24} color="#333" />
+    // </View>
   );
 };
 
 
-const FooterMenu = ({ menuItems, styles }) => {
+const FooterMenu = ({ menuItems, stylesInner }) => {
   return (
     <div
       style={{
         display: "flex",
         alignItems: "stretch",
         width: "100%",
-        height: styles.footerMenuHeight,
+        height: stylesInner.footerMenuHeight,
         backgroundColor: "#17252A",
         color: "#fff",
         position: "fixed",
@@ -90,7 +115,7 @@ const FooterMenu = ({ menuItems, styles }) => {
     >
       {menuItems.map((item, i) => {
         return (
-          <div
+          <View
             key={i}
             style={{
               display: "flex",
@@ -101,9 +126,11 @@ const FooterMenu = ({ menuItems, styles }) => {
           >
             <TouchableOpacity onPress={()=>{}}>
               <Text accessibilityRole="link" href={`${item.to}`} style={{ fontSize: 20,color:"white",textAlign:"center" }}>{item.icon}</Text>
-              <Text style={{color:"white"}}>{styles.showFooterMenuText && item.text}</Text>
+              <Text style={[stylesInner.menuItemsText,styles.menuItemsText]}>{true&& item.text}</Text>
+
+              {/* <Text style={[stylesInner.menuItemsText,styles.menuItemsText]}>{stylesInner.showFooterMenuText && item.text}</Text> */}
             </TouchableOpacity>
-          </div>
+          </View>
         );
       })}
     </div>
@@ -122,7 +149,6 @@ const HomeContent=()=>{
     fetchTodos
   );
   
-  const loremIpsum=`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
 
 
   if (error) return (
@@ -147,35 +173,45 @@ const HomeContent=()=>{
   );
 
   return (
-    <ScrollView style={[styles.container,{zIndex:0,marginTop:40}]}>
+    <ScrollView style={[{zIndex:0,marginTop:40}]}>
         
       <View style={styles.container}>
         <SWRConfig>
-        <Text  aria-level="3" style={[
-          styles.text,{
-            fontSize:24,
-            fontFamily: ["Roboto", "Helvetica", "Arial"],
-            color:"#17252A",
-            fontWeight:"bold",
-            textAlign:"center"
-            }]}>
-            Under Construction
-        </Text>
         <Grid style={{}}>
           <Section style={{width:"100%"}}> 
-            {data.map((el,index)=>{
-              return(
-              <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  key={index} style={{
+              <Block xsSize="1/1" smSize="1/1"lgSize="1/2"   style={{
                 // backgroundColor: getRandomColor(),
                 height:200,justifyContent:"center"}}>
-                <Text accessibilityRole="header" aria-level="3" style={styles.text} >
-                    {/* {el.title} */}
-                    {loremIpsum}
-                </Text>
+
+                   <Text
+                      style={styles.contentPadding}
+                    >Hello, I am </Text>
+                    <Text  aria-level="3" style={[
+                      styles.text,{
+                        fontSize:24,
+                        fontFamily: ["Roboto", "Helvetica", "Arial"],
+                        color:"#17252A",
+                        fontWeight:"bold",
+                        paddingHorizontal:15
+                        }]}>George Millanzi
+                    </Text>
+                    <Text style={styles.contentPadding}>Web and Mobile Developer based in Tanzania. Worked with variety of Techs to build a number of products </Text>
+                    <Text style={[styles.contentPadding,{
+
+                        fontSize:16,
+                        fontFamily: ["Roboto", "Helvetica", "Arial"],
+                        color:"#17252A",
+                        fontWeight:"bold",
+                        marginVertical:20
+                        }]}>NOTE: This site is till under construction!</Text>
               </Block>
-              )
-            })
-          }
+
+              <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  style={{
+                // backgroundColor: getRandomColor(),
+                height:200,justifyContent:"center"}}>
+              
+              </Block>
+
           </Section>
           </Grid>
 
@@ -277,9 +313,9 @@ export default class App extends React.Component {
 
     return (
       <View style={{flex:1}}>
-        <TopBar styles={stylesInner} />
+        <TopBar stylesInner={stylesInner} />
         <HomeContent></HomeContent>
-        <FooterMenu menuItems={menuItems} styles={stylesInner} />
+        <FooterMenu menuItems={menuItems} stylesInner={stylesInner} />
       </View>
     )
   }
@@ -291,7 +327,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     flex:1,
     flexGrow: 1,
-    // justifyContent: 'center',
+    justifyContent: 'center',
     paddingTop:15,
     marginBottom:0
   },
@@ -314,4 +350,11 @@ const styles = StyleSheet.create({
     // textAlign:"center",
     paddingHorizontal:15,
   },
+  contentPadding:{
+    paddingHorizontal:15
+  },
+  menuItemsText:{
+    fontSize:12,
+    color:"white"
+  }
 })
