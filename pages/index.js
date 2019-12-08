@@ -299,8 +299,6 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      windowWidth: 0,
-      windowHeight: 0,
       indexLoading:true
     };
 
