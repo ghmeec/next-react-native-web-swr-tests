@@ -2,6 +2,8 @@ import * as React from 'react'
 import { StyleSheet, Text, View,Button,  ActivityIndicator,ScrollView,TouchableOpacity,Image } from 'react-native'
 import {Grid,Block,Section} from 'react-native-responsive-layout'
 // import { Button as ElementButton } from 'react-native-elements'
+import Link from 'next/link';
+
 
 import iconFont from 'react-native-vector-icons/Fonts/FontAwesome.ttf';
 import iconFont2 from 'react-native-vector-icons/Fonts/AntDesign.ttf'
@@ -10,6 +12,18 @@ import iconFont3 from 'react-native-vector-icons/Fonts/Entypo.ttf'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntIcon from 'react-native-vector-icons/AntDesign'
 import EntypoIcon from 'react-native-vector-icons/Entypo'
+
+import NProgress from 'nprogress'
+import Router from 'next/router'
+
+
+Router.events.on('routeChangeStart', url => {
+  console.log(`Loading: ${url}`)
+  NProgress.start()
+})
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
+
 
 const logo="/site_logo.png"
 
@@ -30,87 +44,73 @@ function getRandomColor() {
   return color;
 }
 
+let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
 
-const TopBar = ({ stylesInner }) => {
-  const topBarStyle = {
-    position: "fixed",
-    top: 0,
-    display: "flex",
-    flexDirection:"row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    height: stylesInner.topBarHeight,
-    backgroundColor: stylesInner.white(),
-    borderBottom: `1px solid ${stylesInner.black(0.1)}`,
-    fontWeight: "bold",
-    padding: "0px 20px",
-    boxSizing: "border-box",
-    paddingHorizontal:20,
-  };
+const stylesInner = {
+  white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+  topBarHeight: 40,
+  footerMenuHeight: 50,
+  // show footer menu text when window is wide enough
+  showFooterMenuText: windowWidth > 500
+};
+
+
+  
+
+const  menuItems = [
+  { icon: <AntIcon name="home" size={24} color="#fff"/>, text: "Home" ,to:"/" },
+  { icon: <EntypoIcon name="graduation-cap" size={24} color="#fff" />, text: "Skills",to:"/skills" },
+  { icon: <EntypoIcon name="archive" size={24} color="#fff" />, text: "Projects",to:"/projects" },
+  { icon: <EntypoIcon name="code" size={24} color="#fff" />, text: "Experience", to:"/experience"},
+  { icon: <AntIcon name="contacts" size={24} color="#fff" />, text: "Contacts", to:"/contacts" }
+];
+
+
+const TopBar = () => {
 
   return (
+    <View style={{height:50,zIndex:1}}>
+      <Grid style={{width:"100%"}}>
+        <Block xsSize="1/4" smSize="1/4"lgSize="1/4"  
+          style={[{marginVertical:8},styles.contentPadding]
+          }>
+          <TouchableOpacity
+              onPress={()=>{}}
+              >
+              <Image
+              
+              source={logo}
+              src={logo} 
+              style={[{
+                height:32,
+                width:32
+              }]}
+              alt="my image" />
+            </TouchableOpacity>
+        </Block>
 
-    <Grid style={{}}>
-    <Block xsSize="1/4" smSize="1/4"lgSize="1/4"  
-      style={[{paddingVertical:8},styles.contentPadding]
-      }>
-      <TouchableOpacity
-          onPress={()=>{}}
-          >
-          <Image
-          
-          source={logo}
-          src={logo} 
-          style={[{
-            height:32,
-            width:32
-          }]}
-          alt="my image" />
-        </TouchableOpacity>
-    </Block>
-
-    <Block xsSize="1/4" smSize="1/4"lgSize="1/4"  style={{}}>
-    
-    </Block>
-
-    </Grid>
-    // <View style={topBarStyle}>
-    //   {/* <Text>{`😺️`}</Text> */}
-    //   <TouchableOpacity
-    //     onPress={()=>{}}
-    //     >
-    //     <img 
+        <Block xsSize="1/4" smSize="1/4"lgSize="1/4"  style={{}}>
         
-    //     src={logo} 
-    //     style={{
-    //       height:30
-    //     }}
-    //     alt="my image" />
-    //   </TouchableOpacity>
-    //   <Text style={{
-    //     fontSize:18,
-    //     color:'#17252A',
-    //     fontFamily:"Helvetica"
-    //     }}>George Honorius Milanzi</Text>
-    //   <AntIcon name="setting" size={24} color="#333" />
-    // </View>
+        </Block>
+
+      </Grid>
+    </View>
   );
 };
 
 
-const FooterMenu = ({ menuItems, stylesInner }) => {
+const FooterMenu = () => {
   return (
-    <div
+    <View
       style={{
-        display: "flex",
+        flexDirection:"row",
         alignItems: "stretch",
-        width: "100%",
         height: stylesInner.footerMenuHeight,
         backgroundColor: "#17252A",
         color: "#fff",
-        position: "fixed",
-        bottom: 0
+        height:50
       }}
     >
       {menuItems.map((item, i) => {
@@ -124,64 +124,71 @@ const FooterMenu = ({ menuItems, stylesInner }) => {
               flex: 1
             }}
           >
+            <Link href={`${item.to}`} >
             <TouchableOpacity onPress={()=>{}}>
-              <Text accessibilityRole="link" href={`${item.to}`} style={{ fontSize: 20,color:"white",textAlign:"center" }}>{item.icon}</Text>
-              <Text style={[stylesInner.menuItemsText,styles.menuItemsText]}>{true&& item.text}</Text>
+              
+                <Text accessibilityRole="link" style={{ fontSize: 20,color:"white",textAlign:"center" }}>{item.icon}</Text>
+                <Text style={[stylesInner.menuItemsText,styles.menuItemsText]}>{true&& item.text}</Text>
 
               {/* <Text style={[stylesInner.menuItemsText,styles.menuItemsText]}>{stylesInner.showFooterMenuText && item.text}</Text> */}
+            
+             
             </TouchableOpacity>
+            </Link>
           </View>
         );
       })}
-    </div>
+    </View>
   );
 };
 
 
 const HomeContent=()=>{
 
-  const { data, error } = useSWR(
-    //  using mongodb stictch webbook
-    //  for real time database update in mongodb atlas
-    //  now works in real time
+  // const { data, error } = useSWR(
+  //   //  using mongodb stictch webbook
+  //   //  for real time database update in mongodb atlas
+  //   //  now works in real time
 
-    "https://webhooks.mongodb-stitch.com/api/client/v2.0/app/shutta-jrspv/service/fetchUsers/incoming_webhook/todoHook",
-    fetchTodos
-  );
+  //   "https://webhooks.mongodb-stitch.com/api/client/v2.0/app/shutta-jrspv/service/fetchUsers/incoming_webhook/todoHook",
+  //   fetchTodos
+  // );
   
 
 
-  if (error) return (
-    <View style={[styles.container,{justifyContent:"center"},{zIndex:0,marginTop:40}]}>
-      <View style={styles.textContainer}>
-        <Text  aria-level="2" style={styles.text}>
-          Lost internet connection
-        </Text>
-      </View>
-    </View>
+  // if (error) return (
+  //   <View style={[styles.container,{justifyContent:"center"},{zIndex:0,marginTop:40}]}>
+  //     <View style={styles.textContainer}>
+  //       <Text  aria-level="2" style={styles.text}>
+  //         Lost internet connection
+  //       </Text>
+  //     </View>
+  //   </View>
 
-  );
-  if (!data) return (
-    <View style={[styles.container,styles.centered,{zIndex:0,marginTop:40}]}>
-      <View style={styles.textContainer}>
-        {/* <Text accessibilityRole="header" aria-level="2" style={styles.text}>
-          Loading...
-        </Text> */}
-        <ActivityIndicator size="large" color="#17252A" animating={true} />
-      </View>
-   </View>
-  );
+  // );
+  // if (!data) return (
+  //   <View style={[styles.container,styles.centered,{zIndex:0,marginTop:40}]}>
+  //     <View style={styles.textContainer}>
+  //       {/* <Text accessibilityRole="header" aria-level="2" style={styles.text}>
+  //         Loading...
+  //       </Text> */}
+  //       <ActivityIndicator size="large" color="#17252A" animating={true} />
+  //     </View>
+  //  </View>
+  // );
 
   return (
-    <ScrollView style={[{zIndex:0,marginTop:40}]}>
         
-      <View style={styles.container}>
-        <SWRConfig>
+      <View style={[styles.container,
+        {
+          // backgroundColor:"red"
+        }
+        ]}>
         <Grid style={{}}>
           <Section style={{width:"100%"}}> 
               <Block xsSize="1/1" smSize="1/1"lgSize="1/2"   style={{
                 // backgroundColor: getRandomColor(),
-                height:200,justifyContent:"center"}}>
+                justifyContent:"center"}}>
 
                    <Text
                       style={styles.contentPadding}
@@ -189,7 +196,8 @@ const HomeContent=()=>{
                     <Text  aria-level="3" style={[
                       styles.text,{
                         fontSize:24,
-                        fontFamily: ["Roboto", "Helvetica", "Arial"],
+                        fontFamily: "Helvetica", 
+                        // "Helvetica", "Arial"],
                         color:"#17252A",
                         fontWeight:"bold",
                         paddingHorizontal:15
@@ -199,7 +207,7 @@ const HomeContent=()=>{
                     <Text style={[styles.contentPadding,{
 
                         fontSize:16,
-                        fontFamily: ["Roboto", "Helvetica", "Arial"],
+                        fontFamily:"Helvetica",
                         color:"#17252A",
                         fontWeight:"bold",
                         marginVertical:20
@@ -208,56 +216,64 @@ const HomeContent=()=>{
 
               <Block xsSize="1/1" smSize="1/1"lgSize="1/2"  style={{
                 // backgroundColor: getRandomColor(),
-                height:200,justifyContent:"center"}}>
+                justifyContent:"center"}}>
               
               </Block>
 
           </Section>
           </Grid>
 
-        </SWRConfig>
 
       </View>
      
       
-    </ScrollView>
+   
   )
 
 
 }
+
+const LoadingIndicator=()=>{
+  return(
+    <View style={[styles.container,styles.centered]}>
+      <View style={styles.textContainer}>
+        {/* <Text accessibilityRole="header" aria-level="2" style={styles.text}>
+          Loading...
+        </Text> */}
+        <ActivityIndicator size="large" color="#17252A" animating={true} />
+      </View>
+   </View>
+  )
+}
 export default class App extends React.Component {
+
 
   constructor(props) {
     super(props);
     this.state = {
       windowWidth: 0,
-      windowHeight: 0
+      windowHeight: 0,
+      indexLoading:true
     };
-    this.updateDimensions = this.updateDimensions.bind(this);
+
   }
 
   componentDidMount() {
-    this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions);
-
-    // Generate required css
-  
+    this.setState({indexLoading:true})
     const iconFontStyles = `@font-face {
-      src: url(${iconFont});
-      font-family: FontAwesome;
-    }
-    @font-face {
-      src: url(${iconFont2});
-      font-family: AntDesign;
-    }
+        src: url(${iconFont});
+        font-family: FontAwesome;
+      }
+      @font-face {
+        src: url(${iconFont2});
+        font-family: AntDesign;
+      }
 
-    @font-face {
-      src: url(${iconFont3});
-      font-family:  Entypo;
-    }
-
-   
-    
+      @font-face {
+        src: url(${iconFont3});
+        font-family:  Entypo;
+      }
+  
     `;
 
     // Create stylesheet
@@ -273,70 +289,49 @@ export default class App extends React.Component {
 
     // Inject stylesheet
     document.head.appendChild(style);
+    console.log("All loaded alread")
+    this.setState({indexLoading:false})
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
-  }
 
-  updateDimensions() {
-    let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-    let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
-
-    this.setState({ windowWidth, windowHeight });
-  }
-
- 
-
- 
 
   render(){
-    const { windowWidth } = this.state;
-
-    const stylesInner = {
-      white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-      topBarHeight: 40,
-      footerMenuHeight: 50,
-      // show footer menu text when window is wide enough
-      showFooterMenuText: windowWidth > 500
-    };
-
-    const  menuItems = [
-    { icon: <AntIcon name="home" size={24} color="#fff"/>, text: "Home" ,to:"/" },
-    { icon: <EntypoIcon name="graduation-cap" size={24} color="#fff" />, text: "Skills",to:"/skills" },
-    { icon: <EntypoIcon name="archive" size={24} color="#fff" />, text: "Projects",to:"/projects" },
-    { icon: <EntypoIcon name="code" size={24} color="#fff" />, text: "Experience", to:"/experience"},
-    { icon: <AntIcon name="contacts" size={24} color="#fff" />, text: "Contacts", to:"/contacts" }
-  ];
-
+    const {indexLoading}=this.state
+    if(indexLoading){
+      return(
+        <LoadingIndicator/>
+      )
+    }
 
     return (
       <View style={{flex:1}}>
-        <TopBar stylesInner={stylesInner} />
-        <HomeContent></HomeContent>
-        <FooterMenu menuItems={menuItems} stylesInner={stylesInner} />
+        <TopBar  />
+        <HomeContent/>
+        <FooterMenu/>
       </View>
     )
   }
 
 }
 
+export {TopBar} 
+export {FooterMenu}
+
 const styles = StyleSheet.create({
   container: {
     // alignItems: 'center',
     flex:1,
-    flexGrow: 1,
     justifyContent: 'center',
     paddingTop:15,
-    marginBottom:0
+    marginBottom:0,
+    zIndex:10
   },
   centered:{
     alignItems: 'center',
     justifyContent: 'center',
   },
   link: {
-    color: 'blue',
+    
     marginHorizontal:40
   },
   textContainer: {
