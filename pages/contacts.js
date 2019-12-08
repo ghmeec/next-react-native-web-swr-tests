@@ -1,19 +1,46 @@
 import React from 'react'
 import { View,Text  } from 'react-native'
 import {TopBar,FooterMenu} from './index'
-export default function Skills(props){
+import {TransitionAnimation,fontAndIconsLoading,LoadingIndicator} from './index'
 
-    return(
-        <View style={{flex:1}}>
-            <TopBar/>
-            <View style={{flex:1,justifyContent:"center",paddingHorizontal:15}}>
-                <Text style={{fontWeight:"bold",fontSize:18}}>Contacts</Text> 
-                <Text style={{fontWeight:"bold",fontSize:14}}>NOTE : Still under constrution!</Text> 
+export default class Contacts extends React.Component{
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+          pageLoading:true
+        };
+    
+      }
+    
+      componentDidMount() {
+        this.setState({pageLoading:true})
+        fontAndIconsLoading()
+        this.setState({pageLoading:false})
+      }
+    
+
+    render(){
+        const {pageLoading} = this.state
+        if(pageLoading){
+            return(
+                <LoadingIndicator/>
+            )
+        }
+        return(
+            <View style={{flex:1}}>
+                <TransitionAnimation/>
+                <TopBar/>
+                <View style={{flex:1,justifyContent:"center",paddingHorizontal:15}}>
+                    <Text style={{fontWeight:"bold",fontSize:18}}>Feel free to contact me for Work or Beer!</Text> 
+                    <Text style={{fontWeight:"bold",fontSize:14}}>NOTE : Still under constrution!</Text> 
+
+                </View>
+                <FooterMenu/>
 
             </View>
-            <FooterMenu/>
+            
+        )
+    }
 
-        </View>
-        
-    )
 }

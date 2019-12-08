@@ -15,6 +15,7 @@ import EntypoIcon from 'react-native-vector-icons/Entypo'
 
 import NProgress from 'nprogress'
 import Router from 'next/router'
+import Head from 'next/head'
 
 
 Router.events.on('routeChangeStart', url => {
@@ -245,6 +246,53 @@ const LoadingIndicator=()=>{
    </View>
   )
 }
+
+
+const TransitionAnimation=()=>{
+  return(
+    <Head>
+    {/* Import CSS for nprogress */}
+    <link rel="stylesheet" type="text/css" href="/nprogress.css" />
+  </Head>
+  )
+}
+
+const fontAndIconsLoading=()=>{
+    const iconFontStyles = `@font-face {
+      src: url(${iconFont});
+      font-family: FontAwesome;
+    }
+    @font-face {
+      src: url(${iconFont2});
+      font-family: AntDesign;
+    }
+
+    @font-face {
+      src: url(${iconFont3});
+      font-family:  Entypo;
+    }
+
+  `;
+
+  // Create stylesheet
+  const style = document.createElement('style');
+  style.type = 'text/css';
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = iconFontStyles;
+  } else {
+    style.appendChild(document.createTextNode(iconFontStyles));
+  }
+
+  // Inject stylesheet
+  document.head.appendChild(style);
+  console.log("All loaded alread")
+
+}
+
+
+
 export default class App extends React.Component {
 
 
@@ -260,36 +308,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.setState({indexLoading:true})
-    const iconFontStyles = `@font-face {
-        src: url(${iconFont});
-        font-family: FontAwesome;
-      }
-      @font-face {
-        src: url(${iconFont2});
-        font-family: AntDesign;
-      }
-
-      @font-face {
-        src: url(${iconFont3});
-        font-family:  Entypo;
-      }
-  
-    `;
-
-    // Create stylesheet
-    const style = document.createElement('style');
-    style.type = 'text/css';
-
-
-    if (style.styleSheet) {
-      style.styleSheet.cssText = iconFontStyles;
-    } else {
-      style.appendChild(document.createTextNode(iconFontStyles));
-    }
-
-    // Inject stylesheet
-    document.head.appendChild(style);
-    console.log("All loaded alread")
+    fontAndIconsLoading()
     this.setState({indexLoading:false})
   }
 
@@ -305,6 +324,7 @@ export default class App extends React.Component {
 
     return (
       <View style={{flex:1}}>
+        <TransitionAnimation/>
         <TopBar  />
         <HomeContent/>
         <FooterMenu/>
@@ -316,6 +336,9 @@ export default class App extends React.Component {
 
 export {TopBar} 
 export {FooterMenu}
+export {TransitionAnimation}
+export {fontAndIconsLoading}
+export {LoadingIndicator}
 
 const styles = StyleSheet.create({
   container: {
